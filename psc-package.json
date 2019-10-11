@@ -1,0 +1,13 @@
+{
+  "name": "frontend",
+  "set": "psc-0.13.3",
+  "source": "https://github.com/purescript/package-sets.git",
+  "depends": [
+    "prelude",
+    "console",
+    "effect",
+    "react-basic",
+    "react-basic-hooks",
+    "psci-support"
+  ]
+}
