@@ -107,6 +107,7 @@ module.exports = (_env, options) => ({
             use: {
               loader: "purs-loader",
               options: {
+                pscPackage: true,
                 bundleOutput: "output/bundle.js",
                 // purs bundling breaks webpack's chunk splitting
                 bundle: false, // isProd(options),
