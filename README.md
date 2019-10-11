@@ -1,10 +1,13 @@
-# react-basic-starter
+# react-basic-starter (forked)
 
-Fork or clone this repo to begin
+Forked from https://github.com/lumihq/react-basic-starter
+
+- Using psc-package instead of (deprecated) bower
+- With react-basic-hooks
 
 ## Install dependencies
 
-`npm i && npx bower i`
+`npm i && npx psc-package install`
 
 ## Develop
 
