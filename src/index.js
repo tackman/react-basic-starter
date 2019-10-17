@@ -1,1 +1,3 @@
-require("./Main.purs").main();
+require('./Main.purs').main();
+
+import './styles.css';

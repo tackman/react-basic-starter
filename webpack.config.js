@@ -1,27 +1,27 @@
-const path = require("path");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ResourceHintWebpackPlugin = require("resource-hints-webpack-plugin");
-const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
-const SubresourceIntegrityWebpackPlugin = require("webpack-subresource-integrity");
-const ManifestPlugin = require("webpack-manifest-plugin");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ResourceHintWebpackPlugin = require('resource-hints-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const SubresourceIntegrityWebpackPlugin = require('webpack-subresource-integrity');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-const outputPath = "build";
+const outputPath = 'build';
 
-const isProd = ({ mode }) => mode === "production";
+const isProd = ({ mode }) => mode === 'production';
 
 module.exports = (_env, options) => ({
   entry: {
-    main: "./src/index.js",
+    main: './src/index.js'
   },
   output: {
-    filename: "bundle.js",
+    filename: 'bundle.js',
     path: path.resolve(__dirname, outputPath),
-    crossOriginLoading: "anonymous"
+    crossOriginLoading: 'anonymous'
   },
   optimization: {
     minimizer: [
@@ -35,24 +35,24 @@ module.exports = (_env, options) => ({
         }
       })
     ],
-    moduleIds: isProd(options) ? "size" : "named",
+    moduleIds: isProd(options) ? 'size' : 'named',
     splitChunks: {
-      chunks: "all",
+      chunks: 'all',
       cacheGroups: {
         styles: {
-          name: "styles",
+          name: 'styles',
           test: /\.(css)$/,
-          chunks: "all",
+          chunks: 'all',
           enforce: true
         },
         react: {
-          name: "react",
+          name: 'react',
           test: /[\\/]node_modules\/(react|react-dom)[\\/]/,
-          chunks: "all",
+          chunks: 'all',
           priority: -5
         },
         purs: {
-          name: "purs",
+          name: 'purs',
           test: /[\\/]output[\\/]/,
           minChunks: 2,
           priority: -5
@@ -67,24 +67,25 @@ module.exports = (_env, options) => ({
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: "styles.css"
+      filename: 'src/styles.css',
     }),
     new HtmlWebpackPlugin({
-      template: "src/index.html"
+      template: 'src/index.html',
+      filename: './index.html'
     }),
     new ResourceHintWebpackPlugin(),
     new ScriptExtHtmlWebpackPlugin({
-      defaultAttribute: "async"
+      defaultAttribute: 'async'
     }),
     new SubresourceIntegrityWebpackPlugin({
-      hashFuncNames: ["sha256", "sha384"],
+      hashFuncNames: ['sha256', 'sha384'],
       // this is here as an example, comes at a perf cost so
       // we probably only want to use it for 3rd party scripts
       enabled: false // isProd(options)
     }),
     new ManifestPlugin(),
     new BundleAnalyzerPlugin({
-      analyzerMode: isProd(options) ? "static" : "disabled",
+      analyzerMode: isProd(options) ? 'static' : 'disabled',
       openAnalyzer: false
     })
   ],
@@ -92,23 +93,23 @@ module.exports = (_env, options) => ({
     rules: [
       {
         test: /\.js$/,
-        loader: "source-map-loader",
+        loader: 'source-map-loader',
         exclude: /node_modules|\.psc-package/
       },
       {
         oneOf: [
           {
-            test: /\.(css)$/,
-            use: [ MiniCssExtractPlugin.loader, "css-loader" ]
+            test: /\.css$/,
+            use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
           },
           {
             test: /\.purs$/,
             exclude: /node_modules/,
             use: {
-              loader: "purs-loader",
+              loader: 'purs-loader',
               options: {
                 pscPackage: true,
-                bundleOutput: "output/bundle.js",
+                bundleOutput: 'output/bundle.js',
                 // purs bundling breaks webpack's chunk splitting
                 bundle: false, // isProd(options),
                 warnings: true,

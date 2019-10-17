@@ -15,4 +15,7 @@ app = unit # makeStateless component \_ ->
     [ R.h1_ [ R.text "Hello world" ]
     , toggle { initialValue: true }
     , toggle { initialValue: false }
+    , R.div {className: "bg-white mx-auto max-w-sm shadow-lg rounded-lg overflow-hidden"
+        ,children: [ R.text "あなたの町の駆けつけ一本おまもり桜"]
+       }
     ]
